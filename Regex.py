@@ -6,15 +6,15 @@ class Regex():
 
     Classes: Contains methods for regex search, match, findall, parse_span,
     parse_range, and check_char.
-    
+
     Author : Lorenzo Duenas
     """
 
     @staticmethod
     def search(pattern, string):
         """Searches through a pattern of strings.
-    
-        Scan through the given string looking for the first location 
+
+        Scan through the given string looking for the first location
         where the regular expression produces a match
         """
         if not isinstance(pattern, str) or not isinstance(string, str):
@@ -38,10 +38,10 @@ class Regex():
         while loop_end:
 
             # Check if the whole string was searched.
-            if (meta_char_pointer[0] == (pattern_length) or \
+            if (meta_char_pointer[0] == (pattern_length) or
                 input_char_pointer[0] == (input_length)) and \
-                match_found is False:
-                    return None
+                    match_found is False:
+                return None
 
             # Check character one by one. Pointers are incremented here.
             result = Regex.check_char(
@@ -62,7 +62,7 @@ class Regex():
             # Save span_start.
             if previous_bool is False:
                 previous_bool = True
-                span_start = input_char_pointer[0]-1
+                span_start = input_char_pointer[0] - 1
 
             # The whole pattern was successfully matched.
             if meta_char_pointer[0] == (pattern_length):
@@ -76,15 +76,13 @@ class Regex():
         match_object = Match(span, string[span_start:span_end])
         return match_object
 
-
     @staticmethod
     def match(pattern, string):
-        """Matches a corresponding characters. 
-        
-        Returns a corresponding match() object if zero or more 
-        characters at the beginning of string match the pattern, 
-        else returns a None
+        """Matches corresponding characters.
 
+        Returns a corresponding match() object if zero or more
+        characters at the beginning of string match the pattern,
+        else returns a None
         """
         if not isinstance(pattern, str) or not isinstance(string, str):
             return None
@@ -118,7 +116,7 @@ class Regex():
 
             # Check if all characters in pattern have been processed.
             if meta_char_pointer[0] == (pattern_length) or \
-            input_char_pointer[0] == (input_length):
+                    input_char_pointer[0] == (input_length):
                 break
 
         # Compute for value of span.
@@ -133,10 +131,9 @@ class Regex():
     def findall(pattern, string):
         """Finds all the possible matches.
 
-        Finds all possible matches in the entire string and 
+        Finds all possible matches in the entire string and
         returns them as a list of strings
         """
-
         match_list = []
         span_set = set()
         string_len = len(string)
@@ -189,9 +186,9 @@ class Regex():
 
         try:
             # Get left, and right, then get all other ascii in-between.
-            char_left = meta_range[meta_range.find("-")-1]
-            char_right = meta_range[meta_range.find("-")+1]
-            for x in range(ord(char_left), ord(char_right)+1):
+            char_left = meta_range[meta_range.find("-") - 1]
+            char_right = meta_range[meta_range.find("-") + 1]
+            for x in range(ord(char_left), ord(char_right) + 1):
                 char_set.add(chr(x))
         except IndexError:
             print("unknown error")
@@ -208,13 +205,12 @@ class Regex():
         meta_pointer):
         """Checks the characters if it is a match.
 
-        Checks if a character matches a specific 
+        Checks if a character matches a specific
         meta character archetype.
         """
-
         # No newline characters.
         if meta_character[meta_pointer[0]] == ".":
-            if char_input[input_pointer[0]] == "\n": 
+            if char_input[input_pointer[0]] == "\n":
                 return False
 
         # Check if the backslash has another input.
@@ -244,7 +240,7 @@ class Regex():
         # Check for repeating characters.
         elif meta_character[meta_pointer[0]] == "+":
             try:
-                last_char = meta_character[meta_pointer[0]-1]
+                last_char = meta_character[meta_pointer[0] - 1]
                 while char_input[input_pointer[0]] == last_char:
                     input_pointer[0] += 1
             except IndexError:
